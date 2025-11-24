@@ -1,0 +1,16 @@
+﻿# --- SQL Server Data Files (ممنوع رفع دول نهائياً) ---
+*.mdf
+*.ldf
+*.ndf
+
+# --- Backups ---
+*.bak
+*.trn
+
+# --- Visual Studio & System Files (لو هتضيف كود المشروع في نفس الفولدر) ---
+.vs/
+bin/
+obj/
+*.user
+*.suo
+[Tt]humbs.db

@@ -1,0 +1,46 @@
+USE [CafeClub]
+GO
+
+/****** Object:  Table [dbo].[Debts]    Script Date: 11/24/2025 10:47:06 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Debts](
+	[DebtID] [int] IDENTITY(1,1) NOT NULL,
+	[ClientID] [int] NOT NULL,
+	[AmountOwed] [decimal](10, 2) NOT NULL,
+	[Createdby] [int] NOT NULL,
+	[CreatedAt] [datetime] NOT NULL,
+	[updateAt] [datetime] NULL,
+ CONSTRAINT [PK_Debts_DebtID] PRIMARY KEY CLUSTERED 
+(
+	[DebtID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[ClientID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Debts] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+
+ALTER TABLE [dbo].[Debts]  WITH CHECK ADD  CONSTRAINT [FK_Debts_ClientID] FOREIGN KEY([ClientID])
+REFERENCES [dbo].[Clients] ([ClientID])
+GO
+
+ALTER TABLE [dbo].[Debts] CHECK CONSTRAINT [FK_Debts_ClientID]
+GO
+
+ALTER TABLE [dbo].[Debts]  WITH CHECK ADD  CONSTRAINT [FK_Debts_Createdby] FOREIGN KEY([Createdby])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+
+ALTER TABLE [dbo].[Debts] CHECK CONSTRAINT [FK_Debts_Createdby]
+GO
+
+
