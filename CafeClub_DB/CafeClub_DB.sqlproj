@@ -76,5 +76,8 @@
     <Build Include="dbo\Stored Procedures\SP_AddNewClient.sql" />
     <Build Include="dbo\Stored Procedures\SP_UpdateUserByUserName.sql" />
     <Build Include="dbo\Stored Procedures\SP_GetUsers.sql" />
+    <Build Include="dbo\Stored Procedures\SP_GetClients.sql" />
+    <Build Include="dbo\Stored Procedures\SP_GetClientbyPhone.sql" />
+    <Build Include="dbo\Stored Procedures\SP_GetAllPaymentsbyPhoneNumber.sql" />
   </ItemGroup>
 </Project>

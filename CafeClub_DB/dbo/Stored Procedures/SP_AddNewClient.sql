@@ -1,5 +1,7 @@
 ﻿
+
 CREATE Procedure [dbo].[SP_AddNewClient]
+@Amount decimal(10,2),
 @Phone nvarchar(20),
 @FullName nvarchar(50),
 @Createdby int,
@@ -11,6 +13,7 @@ begin
 		Begin Try
 
 		declare @PersonID int;
+		
 			if exists(select 1 from People where Phone = @Phone)
 				Begin
 					Throw 50001,'العميل موجود بالفعل',2
@@ -23,6 +26,11 @@ begin
 				insert into Clients (PersonID,Createdby,IsActive) values (@PersonID,@Createdby,@IsActive);
 
 				set @ClientID = SCOPE_IDENTITY();
+
+				insert into Debts (ClientID,AmountOwed,Createdby) values (@ClientID,@Amount,@Createdby);
+
+				
+
 
 	Commit TransAction
 		End Try
