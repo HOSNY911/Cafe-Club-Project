@@ -1,14 +1,5 @@
-﻿USE [CafeClub]
-GO
-
-/****** Object:  StoredProcedure [dbo].[SP_UpdateClientByPhone]    Script Date: 11/24/2025 11:20:10 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-ALTER Procedure [dbo].[SP_UpdateClientByPhone]
+﻿
+CREATE Procedure [dbo].[SP_UpdateClientByPhone]
 
 @NewPhone nvarchar(20),
 @FullName nvarchar(50),
@@ -50,6 +41,3 @@ Begin Catch
 	Throw
 End Catch
 end
-GO
-
-
