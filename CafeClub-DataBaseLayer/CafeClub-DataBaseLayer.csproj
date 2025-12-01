@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientsDB.cs" />
+    <Compile Include="clsClientsDB.cs" />
+    <Compile Include="clsDebitsDB.cs" />
+    <Compile Include="clsGames.cs" />
+    <Compile Include="clsPaymentsDB.cs" />
     <Compile Include="clsUsersDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

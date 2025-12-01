@@ -1,43 +1,63 @@
-﻿
-CREATE Procedure [dbo].[SP_UpdateClientByPhone]
-
+﻿CREATE Procedure [dbo].[SP_UpdateClientByPhone]
 @NewPhone nvarchar(20),
 @FullName nvarchar(50),
 @OldPhone nvarchar(20),
-@Updatedby int,
-@IsActive bit
-as
-begin
-	begin TransAction
-	Begin Try
+@Updatedby int
+AS
+BEGIN
+    SET NOCOUNT ON; 
+    BEGIN TRANSACTION
+    BEGIN TRY
 
-		if not exists(select 1 from People where Phone=@OldPhone)
-			begin
-				Throw 50001,'العميل الذي تحال تحديثة غير موجود',5;
-			End
+        
+        IF NOT EXISTS(SELECT 1 FROM People WHERE Phone = @OldPhone)
+        BEGIN
+            THROW 50001, 'العميل الذي تحاول تحديث بياناته غير موجود', 5;
+        END
 
-			declare @PersonID int;
+        
+        IF (@NewPhone IS NOT NULL AND @NewPhone <> '' AND @NewPhone <> @OldPhone)
+        BEGIN
+            IF EXISTS (SELECT 1 FROM People WHERE Phone = @NewPhone)
+            BEGIN
+                THROW 50002, 'رقم الهاتف الجديد مستخدم بالفعل لعميل آخر', 1;
+            END
+        END
 
-			select @PersonID=Clients.PersonID from Clients
-			join 
-			People on People.PersonID = Clients.PersonID
-			where People.Phone = @OldPhone;
+        DECLARE @PersonID int;
 
+        
+        SELECT @PersonID = Clients.PersonID 
+        FROM Clients
+        JOIN People ON People.PersonID = Clients.PersonID
+        WHERE People.Phone = @OldPhone;
 
-		Update People set Phone=@NewPhone,FullName=@FullName where Phone = @OldPhone;
+		IF @PersonID IS NULL
+            BEGIN
+                THROW 50003, 'هذا الرقم لا ينتمي لعميل مسجل (قد يكون موظفاً أو مستخدماً)', 1;
+            END
 
-		
+        
+        UPDATE People 
+        SET Phone = CASE WHEN @NewPhone IS NULL OR @NewPhone = '' THEN @OldPhone ELSE @NewPhone END,
+            FullName = @FullName 
+        WHERE PersonID = @PersonID;
 
-		update Clients set IsActive = @IsActive,Updatedby=@Updatedby,UpdateAt=GETDATE() where PersonID =@PersonID;
+        
+        UPDATE Clients 
+        SET Updatedby = @Updatedby, 
+            UpdateAt = GETDATE() 
+        WHERE PersonID = @PersonID;
 
-			Commit TransAction
-			return 1;
-	End Try
-Begin Catch
-	if(@@TRANCOUNT>0)
-		begin
-			Rollback TransAction
-		End;
-	Throw
-End Catch
-end
+        COMMIT TRANSACTION
+        RETURN 1;
+
+    END TRY
+    BEGIN CATCH
+        IF (@@TRANCOUNT > 0)
+        BEGIN
+            ROLLBACK TRANSACTION
+        END;
+        THROW; 
+    END CATCH
+END

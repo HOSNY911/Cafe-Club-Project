@@ -26,8 +26,13 @@ namespace CafeClub_Shared
 
     public static class Logger
     {
+
+       
+
         public static void LogError(Exception ex)
         {
+        
+
             string FilePath = AppDomain.CurrentDomain.BaseDirectory + "ErrorLog.txt";
 
             try
@@ -52,9 +57,11 @@ namespace CafeClub_Shared
             }
            
         }
+
+        
     }
 
-    public  class UserDTO
+    public class UserDTO
     {
         public int UserID { get; set; }
         public string UserName { get; set; }
@@ -63,9 +70,31 @@ namespace CafeClub_Shared
         public string CreatedBy { get; set; }
         public string Phone { get; set; }
         public string FullName { get; set; }
+        public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public string Updatedby { get; set; }
+    }
+
+    public static class CurrentUser
+    {
+        public static string UserName { get; private set; } = "Admin";
+        public static int UserID { get; private set; } = 1;
+
+       
+    }
+
+    public class ClientDTO
+    {
+        public int ClientID { get; set; }
+        public string FullName { get; set; }
+        public string Phone { get; set; }
+        public decimal AmountOwed { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public string Updatedby { get; set; }
+        
     }
 
 

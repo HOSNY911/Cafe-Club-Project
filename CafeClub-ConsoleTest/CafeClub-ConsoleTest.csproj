@@ -54,6 +54,10 @@
       <Project>{3077aad9-c916-43ec-aa9a-de424ca67309}</Project>
       <Name>CafeClub-BusinessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CafeClub-Shared\CafeClub-Shared.csproj">
+      <Project>{3dd228e3-ee7f-4726-9cac-2952017d64e8}</Project>
+      <Name>CafeClub-Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

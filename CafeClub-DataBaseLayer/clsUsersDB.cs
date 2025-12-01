@@ -90,7 +90,7 @@ namespace CafeClub_DataBaseLayer
                             }
                         }
 
-                        object totalCountVal = (int)cmd.Parameters["@TotalCount"].Value;
+                        object totalCountVal = cmd.Parameters["@TotalCount"].Value;
 
                         if (totalCountVal != null && totalCountVal != DBNull.Value)
                         {
@@ -133,10 +133,12 @@ namespace CafeClub_DataBaseLayer
                                 User = new UserDTO();
                                 User.UserID = (int)Reader["UserID"];
                                 User.FullName = (string)Reader["FullName"];
+                                User.UserName = (string)Reader["UserName"];
                                 User.Permissions = (int)Reader["Permissions"];
                                 User.IsActive = (bool)Reader["IsActive"];
                                 User.Phone = (string)Reader["Phone"];
-                                User.CreatedBy = (string)Reader["Createdby"];
+                                User.CreatedAt = (DateTime)Reader["CreatedAt"];
+                                User.CreatedBy = Reader["Createdby"] != DBNull.Value ? (string)Reader["Createdby"] : null;
                                 User.UpdatedAt = Reader["UpdatedAt"] != DBNull.Value ? (DateTime?)Reader["UpdatedAt"] : null;
                                 User.Updatedby = Reader["Updatedby"] != DBNull.Value ? (string)Reader["Updatedby"] : null;
                             }
@@ -197,12 +199,20 @@ namespace CafeClub_DataBaseLayer
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@UserName", UserName);
-                    cmd.Parameters.AddWithValue("@Password", Password);
+                    if (string.IsNullOrEmpty(Password))
+                        cmd.Parameters.AddWithValue("@Password", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@Password", Password);
+
                     cmd.Parameters.AddWithValue("@Permissions", Permissions);
                     cmd.Parameters.AddWithValue("@IsActive", IsActive);
                     cmd.Parameters.AddWithValue("@Phone", Phone);
                     cmd.Parameters.AddWithValue("@FullName", FullName);
-                    cmd.Parameters.AddWithValue("@Updatedby", Updatedby);
+
+                    if (string.IsNullOrEmpty(Updatedby))
+                        cmd.Parameters.AddWithValue("@Updatedby", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@Updatedby", Updatedby);
 
                     cmd.Parameters.Add(new SqlParameter("@ReturnValue", SqlDbType.Int)).Direction = ParameterDirection.ReturnValue;
 

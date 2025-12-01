@@ -23,6 +23,7 @@ namespace CafeClub_BusinessLayer
         public string Phone { get; set; }
         public string FullName { get; set; }
         public bool IsActive { get; set; }
+        public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public string Updatedby { get; set; }
 
@@ -36,15 +37,16 @@ namespace CafeClub_BusinessLayer
             this.Phone = string.Empty;
             this.FullName = string.Empty;
             this.IsActive = false;
-            this.UpdatedAt = DateTime.MinValue;
+            this.UpdatedAt = null;
             this.Updatedby = string.Empty;
 
 
             Mode = enMode.AddNew;
         }
 
-        private clsUsersBS(string UserName,string Password,int Permissions,bool IsActive,string Createdby,string Phone,string FullName)
+        private clsUsersBS(int UserID,string UserName,string Password,int Permissions,bool IsActive,string Createdby,DateTime CreatedAt,string Phone,string FullName)
         {
+            this.UserID = UserID;
             this.UserName = UserName;
             this.Password = Password;
             this.Permissions = Permissions;
@@ -59,7 +61,7 @@ namespace CafeClub_BusinessLayer
 
         private bool AddNewUser()
         {
-            this.UserID = clsUsersDB.AddNewUser(this.UserName, this.Password, this.Permissions, this.CreatedBy, this.Phone, this.FullName, this.IsActive);
+            this.UserID = clsUsersDB.AddNewUser(this.UserName,clsUtil.ComputeHash(this.Password), this.Permissions, this.CreatedBy, this.Phone, this.FullName, this.IsActive);
             return (this.UserID != -1);
 
         }
@@ -69,9 +71,10 @@ namespace CafeClub_BusinessLayer
             return clsUsersDB.GetAllUsers(PageNumber, RowPerPage, ref TotalCount);
         }
 
-        public static UserDTO GetUserByUsersName(string UserName)
+        public static clsUsersBS GetUserByUsersName(string UserName)
         {
-            return clsUsersDB.GetUserByUsersName(UserName);
+           UserDTO User = clsUsersDB.GetUserByUsersName(UserName);
+            return new clsUsersBS(User.UserID,User.UserName, User.Password, User.Permissions, User.IsActive, User.CreatedBy,User.CreatedAt, User.Phone, User.FullName);
         }
 
         public static bool IsUserExistsbyUserName(string UserName)
@@ -81,7 +84,10 @@ namespace CafeClub_BusinessLayer
 
         private bool UpdateUserByUserName()
         {
-            return clsUsersDB.UpdateUserByUserName(this.UserName, this.Password, this.Permissions, this.IsActive, this.Phone, this.FullName,this.Updatedby);
+            if (!string.IsNullOrEmpty(this.Password))
+                clsUtil.ComputeHash(this.Password);
+
+            return clsUsersDB.UpdateUserByUserName(this.UserName,this.Password, this.Permissions, this.IsActive, this.Phone, this.FullName, CurrentUser.UserName);
         }
 
         public bool Save()

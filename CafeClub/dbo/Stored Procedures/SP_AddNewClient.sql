@@ -1,4 +1,5 @@
-﻿CREATE Procedure [dbo].[SP_AddNewClient]
+﻿
+CREATE Procedure [dbo].[SP_AddNewClient]
 @Amount decimal(10,2),
 @Phone nvarchar(20),
 @FullName nvarchar(50),
@@ -35,8 +36,8 @@ BEGIN
 
            
             
-            INSERT INTO Clients (PersonID, Createdby, IsActive) 
-            VALUES (@PersonID, @Createdby, @IsActive);
+            INSERT INTO Clients (PersonID, Createdby, IsActive,CreatedAt) 
+            VALUES (@PersonID, @Createdby, @IsActive,GETDATE());
 
             SET @ClientID = SCOPE_IDENTITY();
 

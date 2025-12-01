@@ -96,5 +96,6 @@
     <Build Include="dbo\Stored Procedures\SP_AddDebit.sql" />
     <Build Include="dbo\Stored Procedures\SP_AddCafeTable.sql" />
     <Build Include="dbo\Stored Procedures\SP_InsertErrorLog.sql" />
+    <Build Include="dbo\Stored Procedures\SP_AddNewGame.sql" />
   </ItemGroup>
 </Project>
