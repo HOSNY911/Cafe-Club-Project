@@ -82,7 +82,6 @@
     <Build Include="dbo\Tables\Games.sql" />
     <Build Include="dbo\Tables\ErrorLogs.sql" />
     <Build Include="dbo\Tables\CafeTables.sql" />
-    <Build Include="dbo\Stored Procedures\SP_UpdateGamebyGameID.sql" />
     <Build Include="dbo\Stored Procedures\SP_UpdateCafeTable.sql" />
     <Build Include="dbo\Stored Procedures\SP_IsUserExistsbyUserName.sql" />
     <Build Include="dbo\Stored Procedures\SP_IsClientExistsbyPhoneNumber.sql" />
@@ -90,12 +89,14 @@
     <Build Include="dbo\Stored Procedures\SP_GetAllGames.sql" />
     <Build Include="dbo\Stored Procedures\SP_GetAllCafeTables.sql" />
     <Build Include="dbo\Stored Procedures\SP_DeleteGamebyGameID.sql" />
-    <Build Include="dbo\Stored Procedures\SP_DeleteCafeTables.sql" />
     <Build Include="dbo\Stored Procedures\SP_AddPayment.sql" />
     <Build Include="dbo\Stored Procedures\SP_AddNewSessions.sql" />
     <Build Include="dbo\Stored Procedures\SP_AddDebit.sql" />
     <Build Include="dbo\Stored Procedures\SP_AddCafeTable.sql" />
     <Build Include="dbo\Stored Procedures\SP_InsertErrorLog.sql" />
     <Build Include="dbo\Stored Procedures\SP_AddNewGame.sql" />
+    <Build Include="dbo\Stored Procedures\SP_UpdateGamebyGameName.sql" />
+    <Build Include="dbo\Stored Procedures\SP_GetGameByGameName.sql" />
+    <Build Include="dbo\Stored Procedures\SP_DeleteCafeTable.sql" />
   </ItemGroup>
 </Project>

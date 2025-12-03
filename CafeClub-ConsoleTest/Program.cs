@@ -234,6 +234,72 @@ namespace CafeClub_ConsoleTest
             }
         }
 
+
+        //Games Function Test
+
+
+        static void AddNewGame()
+        {
+            clsGamesBS Game = new clsGamesBS();
+
+
+            Game.GameName = "playstation 5";
+            Game.PricePerHour = 15;
+           
+
+
+            if (Game.Save())
+            {
+                Console.WriteLine("Game Add Successfully");
+            }
+            else
+            {
+                Console.WriteLine("Game Add Faild");
+            }
+        }
+
+        public static void GetAllGames()
+        {
+           
+            DataTable dt = clsGamesBS.GetAllGames();
+            foreach (DataRow dr in dt.Rows)
+            {
+                Console.WriteLine(dr["GameID"]);
+                Console.WriteLine(dr["GameName"]);
+                Console.WriteLine(dr["PricePerHour"]);
+                Console.WriteLine(dr["Createby"]);
+                Console.WriteLine(dr["Updatedby"]);
+                Console.WriteLine("\n\n");
+            }
+        }
+
+        public static void DeleteGamebyGameID()
+        {
+            if (clsGamesBS.DeleteGamebyGameID(1))
+            {
+                Console.WriteLine("Game Deleted Successfully");
+            }
+            else
+                Console.WriteLine("Game Deleted Faild");
+
+        }
+
+        public static void UpdateGamebyGameID()
+        {
+            clsGamesBS Game = clsGamesBS.GetGameByGameName("playstation 5");
+
+            Game.PricePerHour = 5.50m;
+           
+            if (Game.Save())
+            {
+                Console.WriteLine("Game Updated Successfully");
+            }
+            else
+            {
+                Console.WriteLine("Game Updated Faild");
+            }
+        }
+
         static void Main(string[] args)
         {
 
@@ -266,6 +332,14 @@ namespace CafeClub_ConsoleTest
             //Payments Functions Test
             //AddPayment();
             //GetAllPaymentsbyPhoneNumber();
+
+
+            //Games Function Test
+
+            //AddNewGame();
+            //GetAllGames();
+            //DeleteGamebyGameID();
+            //UpdateGamebyGameID();
         }
     }
 }

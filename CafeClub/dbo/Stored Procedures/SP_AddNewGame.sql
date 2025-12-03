@@ -1,7 +1,9 @@
-﻿CREATE   PROCEDURE SP_AddNewGame
+﻿
+CREATE   PROCEDURE [dbo].[SP_AddNewGame]
 @GameName nvarchar(50),
 @PricePerHour decimal(10,2),
-@Createby int
+@Createby int,
+@GameID int output
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -21,7 +23,9 @@ BEGIN
             PricePerHour = @PricePerHour, 
             Updatedby = @Createby,        
             UpdatedAt = GETDATE()         
-        WHERE GameName = @GameName;       
+        WHERE GameName = @GameName; 
+		
+		select @GameID = GameID from Games where GameName=@GameName;
 
         RETURN 1;
     END
@@ -29,6 +33,8 @@ BEGIN
     
     INSERT INTO Games (GameName, PricePerHour, Createby, CreatedAt, IsActive) 
     VALUES (@GameName, @PricePerHour, @Createby, GETDATE(), 1);
+
+	select @GameID = SCOPE_IDENTITY();
 
     RETURN 1;
 END

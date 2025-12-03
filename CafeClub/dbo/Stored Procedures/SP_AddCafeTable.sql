@@ -1,6 +1,8 @@
-﻿CREATE   Procedure SP_AddCafeTable
+﻿
+CREATE   Procedure [dbo].[SP_AddCafeTable]
 @TableName nvarchar(50),
-@GameID int
+@GameID int,
+@TableID int output
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -19,6 +21,8 @@ BEGIN
         
         INSERT INTO CafeTables (TableName, GameID, IsActive) 
         VALUES (@TableName, @GameID, 1);
+
+		select @TableID = SCOPE_IDENTITY();
         
         RETURN 1;
 

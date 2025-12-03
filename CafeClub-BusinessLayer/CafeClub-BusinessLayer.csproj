@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="clsClientsBS.cs" />
     <Compile Include="clsDebitsBS.cs" />
+    <Compile Include="clsGamesBS.cs" />
     <Compile Include="clsPaymentsBS.cs" />
     <Compile Include="clsUsersBS.cs" />
     <Compile Include="clsUtil.cs" />

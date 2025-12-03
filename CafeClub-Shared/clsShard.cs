@@ -97,6 +97,18 @@ namespace CafeClub_Shared
         
     }
 
+    public class GameDTO
+    {
+        public int GameID { get; set; }
+        public string GameName { get; set; }
+        public decimal PricePerHour { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public string Updatedby { get; set; }
+
+    }
+
 
 
 
